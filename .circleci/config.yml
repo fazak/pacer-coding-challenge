@@ -7,15 +7,14 @@ orbs:
 
 jobs:
   unit-test:
-    working_directory: ~/pacer-app 
+    working_directory: ~/pacer-coding-challenge/pacer-app
     docker:
       - image: cimg/python:3.10
     steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: pip3 install --upgrade pip &&
-                   pip3 install -r requirements.txt
+      - checkout:
+          path: ~/pacer-coding-challenge
+      - python/install-packages:
+          pkg-manager: pip
       - run:
           name: Run unit test
           command: export DEBUG=True && export SECRET_KEY=${DJANGO_SECRET_KEY} &&
