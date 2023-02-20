@@ -17,27 +17,9 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run unit test
-          command: export DEBUG=True && export SECRET_KEY=${DJANGO_SECRET_KEY} &&
-                   export USE_RDS=False && python3 manage.py test
-
-#  build-and-push-app:
-#    steps:
-#      - requires:
-#          - unit-test
-#      - checkout
-#      - aws-ecr/build-and-push-image:
-#          dockerfile: docker/Dockerfile.app
-#          context: .
-#          repo: "${APP_PREFIX}-app"
-#          tag: "${CIRCLE_SHA1}"
-#
-#  build-and-push-nginx:
-#    - checkout
-#    - aws-ecr/build-and-push-image:
-#        dockerfile: docker/Dockerfile.nginx
-#        context: .
-#        repo: "${APP_PREFIX}-nginx"
-#        tag: "${CIRCLE_SHA1}"
+          command:
+            export DEBUG=True && export SECRET_KEY=${DJANGO_SECRET_KEY} &&
+            export USE_RDS=False && python3 manage.py test
 
 workflows:
   pacer-workflow:
@@ -64,5 +46,6 @@ workflows:
           family: "${APP_PREFIX}-family"
           service-name: "${APP_PREFIX}-service"
           cluster: "${APP_PREFIX}-cluster"
-          container-image-name-updates: "container=${APP_PREFIX}-app,tag=${CIRCLE_SHA1},
-                                         container=${APP_PREFIX}-nginx,tag=${CIRCLE_SHA1}"
+          container-image-name-updates:
+            "container=${APP_PREFIX}-app,tag=${CIRCLE_SHA1},
+            container=${APP_PREFIX}-nginx,tag=${CIRCLE_SHA1}"
