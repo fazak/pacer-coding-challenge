@@ -1,0 +1,6 @@
+Django==4.1.6
+djangorestframework==3.14.0
+gunicorn==20.1.0
+psycopg2-binary==2.9.5
+sql-metadata==2.6.0
+sqlparse==0.4.3

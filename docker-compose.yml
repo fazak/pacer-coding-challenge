@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    platform: linux/amd64
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    build:
+      dockerfile: docker/Dockerfile.app
+      context: .
+    ports:
+       - "8000:8000"
+
+  nginx:
+    platform: linux/amd64
+    volumes:
+      - static:/static
+    build:
+      dockerfile: docker/Dockerfile.nginx
+      context: .
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+volumes:
+  static:

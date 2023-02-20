@@ -1,0 +1,13 @@
+FROM nginx:stable-alpine
+
+WORKDIR /opt/nginx
+COPY nginx .
+
+RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.ori && \
+    cp app.conf /etc/nginx/nginx.conf
+
+STOPSIGNAL SIGQUIT
+
+EXPOSE 80
+
+ENTRYPOINT [ "/bin/sh", "entrypoint.sh" ]
