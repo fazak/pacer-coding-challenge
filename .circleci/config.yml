@@ -7,12 +7,11 @@ orbs:
 
 jobs:
   unit-test:
+    working_directory: ~/pacer-app 
     docker:
       - image: cimg/python:3.10
-    working_directory: ~/pacer-app 
     steps:
-      - checkout:
-          path: ~/pacer-app
+      - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
